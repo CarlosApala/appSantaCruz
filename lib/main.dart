@@ -16,6 +16,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:programa40/page/home_page.dart';
+import 'package:programa40/provider.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(const MyApp());
 
@@ -27,29 +30,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late GoogleMapController mapController;
-
-  final LatLng _center = const LatLng(-17.782782384397713, -63.18248363742262);
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Maps Sample App'),
-          backgroundColor: Colors.green[700],
-        ),
-        body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 13.0,
-          ),
-        ),
+    return ChangeNotifierProvider(
+      create: (context) => UbicacionProvider(),
+      child: MaterialApp(
+        initialRoute: 'home',
+        routes: {'home': (_) => const HomePage()},
       ),
     );
   }
