@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:programa40/provider.dart';
+import 'package:provider/provider.dart';
 
 class WGoogleMpas extends StatefulWidget {
   WGoogleMpas({Key? key}) : super(key: key);
@@ -19,12 +21,16 @@ class _WGoogleMpasState extends State<WGoogleMpas> {
 
   @override
   Widget build(BuildContext context) {
+    final ubicacion = Provider.of<UbicacionProvider>(context);
+
     return Container(
         margin: const EdgeInsets.only(top: 40.0),
         width: 350,
         height: 550,
         child: GoogleMap(
-          onMapCreated: _onMapCreated,
+          onMapCreated: (controller) {
+            ubicacion.controladorGoogle = controller;
+          },
           initialCameraPosition: CameraPosition(
             target: _center,
             zoom: 13.0,

@@ -15,12 +15,20 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:programa40/page/home_page.dart';
 import 'package:programa40/provider.dart';
 import 'package:provider/provider.dart';
+import 'package:geocoding/geocoding.dart';
 
-void main() => runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  print('------------------------------');
+  await locationFromAddress("Santa Cruz,bolivia")
+      .then((value) => print("jose " + value.toString()));
+  print('--------------------------------');
+  runApp(const MyApp());
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -32,11 +40,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    UbicacionProvider ds = UbicacionProvider();
+
     return ChangeNotifierProvider(
       create: (context) => UbicacionProvider(),
       child: MaterialApp(
         initialRoute: 'home',
-        routes: {'home': (_) => const HomePage()},
+        debugShowCheckedModeBanner: false,
+        routes: {'home': (_) => HomePage()},
       ),
     );
   }
